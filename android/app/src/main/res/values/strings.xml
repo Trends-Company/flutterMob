@@ -1,0 +1,5 @@
+<resources>
+<!--    &lt;!&ndash; MUST CONFIG IF ADD LOGIN FACEBOOK &ndash;&gt;-->
+<!--    <string name="facebook_app_id">your_facebook_app_id</string>-->
+<!--    <string name="facebook_client_token">your_facebook_client_token</string>-->
+</resources>

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "446060903157",
+    "project_id": "aigraphy",
+    "storage_bucket": "aigraphy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446060903157:android:dcde762055cddb854a63bc",
+        "android_client_info": {
+          "package_name": "dev.trends.aiGraphy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446060903157-9i9of86bbu12eo09drk1osfd0sei32pl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.trends.aiGraphy",
+            "certificate_hash": "f7d99d9897ca2fb1829b745f435320b2304c9931"
+          }
+        },
+        {
+          "client_id": "446060903157-stkpeco3dsj8srejmq1ojd0l7huba5sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-mxv6gE5JyAmXYyDPH4APcjR5rIo7JLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446060903157-stkpeco3dsj8srejmq1ojd0l7huba5sm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "446060903157-f75oojdb2vgq8oedomrodbon3bv8ufa7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.trends.aiGraphy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

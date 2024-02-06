@@ -1,0 +1,65 @@
+{
+  "identifier" : "8C2D811C",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6471821753",
+      "localizations" : [
+        {
+          "description" : "Use 0.99$ to buy 1000 Tokens",
+          "displayName" : "1000 Tokens FaceSwap ",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "dev_ditustudio_faceswap1",
+      "referenceName" : "1000 Tokens FaceSwap",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "6471822075",
+      "localizations" : [
+        {
+          "description" : "Use 2.99$ buy 3000 Tokens, bonus 300 Tokens",
+          "displayName" : "3000 Tokens FaceSwap ",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "dev_ditustudio_faceswap2",
+      "referenceName" : "3000 Tokens FaceSwap",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "6471822145",
+      "localizations" : [
+        {
+          "description" : "Use $5.99 buy 6000 Tokens, bonus 1000 Tokens",
+          "displayName" : "3000 Tokens FaceSwap",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "dev_ditustudio_faceswap3",
+      "referenceName" : "6000 Tokens FaceSwap",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6471816673",
+    "_developerTeamID" : "NYUV3EM563",
+    "_lastSynchronizedDate" : 721376901.88387597
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
