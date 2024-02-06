@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -201,6 +202,10 @@ class _MenuScreenState extends State<MenuScreen> {
                       EasyLoading.dismiss();
                     } else {
                       await setNoti(false);
+                      // here is noti local
+                      //if you don't want to receive noti from firebase ok?
+                      print('disable');
+                      await FirebaseMessaging.instance.unsubscribeFromTopic('all');
                       flutterLocalNotificationsPlugin.cancelAll();
                     }
                   },

@@ -170,5 +170,8 @@
     "addNewFace": "新しい顔を追加",
     "pleaseTryOtherVideo": "他のビデオをお試しください。",
     "tryToBuy": "トークンを購入して画像の顔を交換し続けてください！",
-    "next": "次"
+    "next": "次",
+    "hdExport": "HD エクスポート",
+    "removeWater": "ウォーターマークを削除",
+    "seeAll": "すべてを見る"
 }

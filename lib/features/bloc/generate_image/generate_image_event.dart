@@ -11,15 +11,20 @@ sealed class GenerateImageEvent extends Equatable {
 class InitialGenerateImage extends GenerateImageEvent {
   const InitialGenerateImage(
       {required this.context,
-      required this.srcPath,
-      required this.dstPath,
-      this.handleToken = true});
+        required this.srcPath,
+        required this.dstPath,
+        this.handleToken = true,
+        this.isHD = true,
+        this.isRmWater = true});
   final BuildContext context;
   final String srcPath;
   final String dstPath;
   final bool handleToken;
+  final bool isHD;
+  final bool isRmWater;
   @override
-  List<Object> get props => [context, srcPath, dstPath, handleToken];
+  List<Object> get props =>
+      [context, srcPath, dstPath, handleToken, isHD, isRmWater];
 }
 
 class EditGenerateImage extends GenerateImageEvent {

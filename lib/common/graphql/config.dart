@@ -8,6 +8,7 @@ mixin Config {
         cache: GraphQLCache(),
         link: WebSocketLink(
           'ws://138.68.111.65:8080/v1/graphql',
+          //'wss://direct-bee-78.hasura.app/v1/graphql',
           config: SocketClientConfig(
               autoReconnect: true,
               inactivityTimeout: const Duration(seconds: 60),

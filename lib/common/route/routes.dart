@@ -15,4 +15,8 @@ class Routes {
   static const String step_one = '/step_one';
   static const String result_edit_image = '/result_edit_image';
   static const String result_remove_bg = '/result_remove_bg';
+  static const String full_image_category = '/full_image_category';
+  static const String full_image_trending = '/full_image_trending';
+  static const String full_image_new_today = '/full_image_new_today';
+  static const String step_two_video = '/step_two_video';
 }

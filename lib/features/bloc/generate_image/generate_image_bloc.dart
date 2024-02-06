@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:face_swap_flutter/common/constant/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../common/bloc/user/bloc_user.dart';
+import '../../../common/constant/colors.dart';
 import '../../../common/constant/error_code.dart';
 import '../../../common/constant/helper.dart';
 import '../../../common/constant/styles.dart';
@@ -25,7 +25,6 @@ class GenerateImageBloc extends Bloc<GenerateImageEvent, GenerateImageState> {
   Uint8List? result;
   String? url;
   int? requestId;
-  String? errorText;
 
   Future<void> _onInitialGenerateImage(
       InitialGenerateImage event, Emitter<GenerateImageState> emit) async {
@@ -33,9 +32,9 @@ class GenerateImageBloc extends Bloc<GenerateImageEvent, GenerateImageState> {
     try {
       result = null;
       url = null;
-      errorText = null;
       requestId = null;
-      result = await handleImage(event.srcPath, event.dstPath, event.context);
+      result = await handleImage(event.srcPath, event.dstPath, event.context,
+          event.isHD, event.isRmWater);
       if (result != null) {
         final res = await uploadImage(result, event.context);
         if (res != null && res['url'] != null && res['request_id'] != null) {
@@ -43,8 +42,15 @@ class GenerateImageBloc extends Bloc<GenerateImageEvent, GenerateImageState> {
           requestId = res['request_id'];
           if (event.handleToken) {
             final UserBloc userBloc = event.context.read<UserBloc>();
+            int tokensLost = TOKEN_SWAP;
+            if (event.isHD) {
+              tokensLost += TOKEN_EXPORT_HD;
+            }
+            if (event.isRmWater) {
+              tokensLost += TOKEN_REM_MARK;
+            }
             userBloc
-                .add(UpdateTokenUser(userBloc.userModel!.token - TOKEN_SWAP));
+                .add(UpdateTokenUser(userBloc.userModel!.token - tokensLost));
           }
           emit(GenerateImageLoaded(
               imageRes: result, url: url, requestId: requestId));
@@ -75,23 +81,24 @@ class GenerateImageBloc extends Bloc<GenerateImageEvent, GenerateImageState> {
     BotToast.showText(text: input, textStyle: body(color: grey1100));
   }
 
-  Future<Uint8List?> handleImage(
-      String srcPath, String dstPath, BuildContext context) async {
+  Future<Uint8List?> handleImage(String srcPath, String dstPath,
+      BuildContext context, bool isHD, bool isRmWater) async {
     Uint8List? result;
     try {
       final request =
-          http.MultipartRequest('POST', Uri.parse('$apiEndpoint/upload'));
+      http.MultipartRequest('POST', Uri.parse('$apiEndpoint/swap_image'));
       request.files.addAll([
         await http.MultipartFile.fromPath('srcPath', srcPath),
         await http.MultipartFile.fromPath('dstPath', dstPath)
       ]);
       request.fields['uuid'] = firebaseUser.uid;
+      request.fields['isHD'] = isHD ? '1' : '0';
+      request.fields['isRmWater'] = isRmWater ? '1' : '0';
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         result = response.bodyBytes;
       } else {
-        errorText = SOMETHING_WENT_WRONG;
         showSnackBar(SOMETHING_WENT_WRONG, context);
       }
     } catch (e) {

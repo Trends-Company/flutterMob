@@ -173,5 +173,8 @@ abstract class  LocaleKeys {
   static const pleaseTryOtherVideo = 'pleaseTryOtherVideo';
   static const tryToBuy = 'tryToBuy';
   static const next = 'next';
+  static const hdExport = 'hdExport';
+  static const removeWater = 'removeWater';
+  static const seeAll = 'seeAll';
 
 }

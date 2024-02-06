@@ -26,7 +26,7 @@ void handleMess(RemoteMessage? mess) {
 Future<void> initPushNoti() async {
   FirebaseMessaging.instance.getInitialMessage().then(handleMess);
   FirebaseMessaging.onMessageOpenedApp.listen(handleMess);
-  await FirebaseMessaging.instance.subscribeToTopic('all');
+  await FirebaseMessaging.instance.subscribeToTopic('all'); // here
   final customerInfo = await Purchases.getCustomerInfo();
   await checkNotiFirstTime(customerInfo);
   await checkNotiOneTime(customerInfo);

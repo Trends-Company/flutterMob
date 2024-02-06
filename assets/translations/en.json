@@ -115,6 +115,7 @@
     "sliderWhiteBlackColor": "Slider White Black Color",
     "pleaseChoosePhoto": "Please choose photo has size less than 2 MB",
     "weDontSupportGif": "We don't support gif files. Please choose another file",
+    "weDontSupportWebp": "We don't support webp files. Please choose another file",
     "failedToFetchRequests": "Failed to fetch requests",
     "noRequests": "No requests found",
     "failedToFetchPhotos": "Failed to fetch photos",
@@ -169,5 +170,8 @@
     "addNewFace": "Add new face",
     "pleaseTryOtherVideo": "Please try other video.",
     "tryToBuy": "Try to buy the token and continue to Swap Face the image now!",
-    "next": "Next"
+    "next": "Next",
+    "hdExport": "HD Export",
+    "removeWater": "Remove Watermark",
+    "seeAll": "See All"
 }

@@ -94,7 +94,7 @@ class _ImageCropperFreeStyleState extends State<ImageCropperFreeStyle> {
                     EasyLoading.dismiss();
                     Navigator.pop(context);
                   }
-
+                  final newFace = await comporessImage(state!.rawImageData);
                   final data = await cropImageWithThread(
                     imageBytes: state!.rawImageData,
                     rect: state.getCropRect()!,

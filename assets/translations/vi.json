@@ -115,6 +115,7 @@
     "sliderWhiteBlackColor": "Thanh trượt màu trắng đen",
     "pleaseChoosePhoto": "Vui lòng chọn ảnh có kích thước nhỏ hơn 2 MB",
     "weDontSupportGif": "Chúng tôi không hỗ trợ tệp gif. Vui lòng chọn tệp khác",
+    "weDontSupportWebp": "Chúng tôi không hỗ trợ tệp webp. Vui lòng chọn tệp khác",
     "failedToFetchRequests": "Không thể lấy yêu cầu",
     "noRequests": "Không tìm thấy yêu cầu",
     "failedToFetchPhotos": "Không thể lấy ảnh",
@@ -169,5 +170,8 @@
     "addNewFace": "Thêm khuôn mặt mới",
     "pleaseTryOtherVideo": "Vui lòng thử video khác.",
     "tryToBuy": "Hãy thử mua token và tiếp tục hoán đổi khuôn mặt ngay bây giờ!",
-    "next": "Tiếp theo"
+    "next": "Tiếp theo",
+    "hdExport": "Xuất HD",
+    "removeWater": "Xóa Logo",
+    "seeAll": "Xem tất cả"
 }

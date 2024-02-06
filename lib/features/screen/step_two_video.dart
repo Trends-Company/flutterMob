@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+//import 'package:video_player/video_player.dart';
 
 import '../../app/widget_support.dart';
 import '../../common/bloc/recent_face/bloc_recent_face.dart';
@@ -15,6 +17,7 @@ import '../../common/constant/helper.dart';
 import '../../common/constant/images.dart';
 import '../../common/constant/styles.dart';
 import '../../common/helper_ads/ads_lovin_utils.dart';
+import '../../common/models/image_category_model.dart';
 import '../../common/models/recent_face_model.dart';
 import '../../common/route/routes.dart';
 import '../../common/widget/ads_applovin_banner.dart';
@@ -23,26 +26,38 @@ import '../../common/widget/animation_long_press.dart';
 import '../../common/widget/app_bar_cpn.dart';
 import '../../common/widget/open_slot.dart';
 import '../../translations/export_lang.dart';
+import '../bloc/full_image_cate/full_image_cate_bloc.dart';
 import '../bloc/generate_image/bloc_generate_image.dart';
 import '../bloc/remove_bg_image/bloc_remove_bg_image.dart';
 import '../bloc/set_image_swap/set_image_swap_bloc.dart';
+//import '../bloc/swap_video/bloc_swap_video.dart';
 import '../widget/gift_widget.dart';
 import '../widget/loading_face.dart';
+import '../widget/loading_image.dart';
 import '../widget/not_enough_token.dart';
 import '../widget/recent_face_video.dart';
 import '../widget/token_remain.dart';
-import '../widget/token_widget.dart';
 import 'step_three.dart';
+//import 'step_three_video.dart';
 
-class StepTwo extends StatefulWidget {
-  const StepTwo({super.key, required this.bytes, required this.pathSource});
-  final Uint8List bytes;
-  final String pathSource;
+class StepTwoVideo extends StatefulWidget {
+  const StepTwoVideo(
+      {super.key,
+      this.isSwapVideo = true,
+      this.pathSource,
+      this.nameCate,
+      this.categoryId,
+      this.images});
+  final String? pathSource;
+  final bool isSwapVideo;
+  final int? categoryId;
+  final String? nameCate;
+  final List<ImageCategoryModel>? images;
   @override
-  State<StepTwo> createState() => _StepTwoVideoState();
+  State<StepTwoVideo> createState() => _StepTwoVideoState();
 }
 
-class _StepTwoVideoState extends State<StepTwo> {
+class _StepTwoVideoState extends State<StepTwoVideo> {
   Uint8List? yourFace;
   String? pathLocal;
   String? pathPublic;
@@ -50,7 +65,27 @@ class _StepTwoVideoState extends State<StepTwo> {
   bool showDelete = false;
   bool isHD = true;
   bool isRmWater = true;
-  late int tokensLost;
+  //VideoPlayerController? videoCtl;
+  PageController? pageCtl;
+  late int tokensLostVideo;
+  late int tokensLostImage;
+
+  void _onScroll() {
+    if (_isBottom) {
+      context
+          .read<FullImageCategoryBloc>()
+          .add(FullImageCategoryFetched(categoryId: widget.categoryId!));
+    }
+  }
+
+  bool get _isBottom {
+    if (!pageCtl!.hasClients) {
+      return false;
+    }
+    final maxScroll = pageCtl!.position.maxScrollExtent;
+    final currentScroll = pageCtl!.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
 
   Future<void> updateTokenUser(int reward) async {
     final UserBloc userBloc = context.read<UserBloc>();
@@ -79,12 +114,49 @@ class _StepTwoVideoState extends State<StepTwo> {
     });
   }
 
+  // Future<void> handleSwapVideo() async {
+  //   context.read<SwapVideoBloc>().add(const ResetSwapVideo());
+  //   if (pathLocal != null) {
+  //     uploadFace(context, yourFace!);
+  //     context.read<SwapVideoBloc>().add(InitialSwapVideo(
+  //         context: context,
+  //         srcPath: widget.pathSource!,
+  //         dstPath: pathLocal!,
+  //         handleToken: true,
+  //         isHD: isHD,
+  //         isRmWater: isRmWater));
+  //     Navigator.of(context).pushNamed(Routes.step_three_video,
+  //         arguments:
+  //             StepThreeVideo(dstPath: pathLocal!, srcPath: widget.pathSource!));
+  //   } else {
+  //     final res = await getImage(pathPublic!);
+  //     final file = await createFileUploadDO(res);
+  //     context.read<SwapVideoBloc>().add(InitialSwapVideo(
+  //         context: context,
+  //         srcPath: widget.pathSource!,
+  //         dstPath: file.path,
+  //         handleToken: true,
+  //         isHD: isHD,
+  //         isRmWater: isRmWater));
+  //     Navigator.of(context).pushNamed(Routes.step_three_video,
+  //         arguments:
+  //             StepThreeVideo(dstPath: file.path, srcPath: widget.pathSource!));
+  //   }
+  // }
+
   Future<void> handleSwapImage() async {
+    final imageSwapTmp =
+        await getImage(context.read<SetImageSwapCubit>().state!.image);
+    final tempDirImageSwap = await Directory.systemTemp.createTemp();
+    final tempFileImageSwap = File(
+        '${tempDirImageSwap.path}/${DateTime.now().toIso8601String()}.jpg');
+    await tempFileImageSwap.writeAsBytes(imageSwapTmp);
+
     if (pathLocal != null) {
       uploadFace(context, yourFace!);
       context.read<GenerateImageBloc>().add(InitialGenerateImage(
           context: context,
-          srcPath: widget.pathSource,
+          srcPath: tempFileImageSwap.path,
           dstPath: pathLocal!,
           handleToken: true,
           isHD: isHD,
@@ -95,16 +167,16 @@ class _StepTwoVideoState extends State<StepTwo> {
           .add(const ResetRemoveBGImage(hasLoaded: true));
       Navigator.of(context).pushNamed(Routes.step_three,
           arguments: StepThree(
-              srcImage: widget.bytes,
+              srcImage: imageSwapTmp,
               dstImage: yourFace!,
               dstPath: pathLocal!,
-              srcPath: widget.pathSource));
+              srcPath: tempFileImageSwap.path));
     } else {
       final res = await getImage(pathPublic!);
       final file = await createFileUploadDO(res);
       context.read<GenerateImageBloc>().add(InitialGenerateImage(
           context: context,
-          srcPath: widget.pathSource,
+          srcPath: tempFileImageSwap.path,
           dstPath: file.path,
           handleToken: true,
           isHD: isHD,
@@ -114,10 +186,10 @@ class _StepTwoVideoState extends State<StepTwo> {
           .add(const ResetRemoveBGImage(hasLoaded: true));
       Navigator.of(context).pushNamed(Routes.step_three,
           arguments: StepThree(
-              srcImage: widget.bytes,
+              srcImage: imageSwapTmp,
               dstImage: res,
               dstPath: file.path,
-              srcPath: widget.pathSource));
+              srcPath: tempFileImageSwap.path));
     }
   }
 
@@ -249,17 +321,39 @@ class _StepTwoVideoState extends State<StepTwo> {
     if (context.read<RecentFaceBloc>().recentFaces.isNotEmpty) {
       pathPublic = context.read<RecentFaceBloc>().recentFaces[0].face;
     }
-    tokensLost = TOKEN_SWAP + TOKEN_EXPORT_HD + TOKEN_REM_MARK;
-    //AdLovinUtils().initializeInterstitialAds(() {});
+
+   // if (widget.isSwapVideo) {
+      // AdLovinUtils().initializeInterstitialAds2(() {});
+      // tokensLostVideo = TOKEN_SWAP_VIDEO + TOKEN_EXPORT_HD + TOKEN_REM_MARK;
+      // videoCtl = VideoPlayerController.file(File(widget.pathSource!))
+      //   ..initialize().then((value) {
+      //     setState(() {});
+      //   })
+      //   ..play();
+   // } else {
+    //  checkHasAds();
+      tokensLostImage = TOKEN_SWAP + TOKEN_EXPORT_HD + TOKEN_REM_MARK;
+      if (widget.images != null) {
+        final int page =
+            widget.images!.indexOf(context.read<SetImageSwapCubit>().state!);
+        pageCtl = PageController(viewportFraction: 0.9, initialPage: page);
+      }
+   // }
   }
 
   @override
   void dispose() {
+   // videoCtl?.dispose();
+    if (!widget.isSwapVideo && widget.images == null)
+      pageCtl!
+        ..removeListener(_onScroll)
+        ..dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final height = AppWidget.getHeightScreen(context);
     final check = pathPublic != null || pathLocal != null;
     return Scaffold(
       appBar: AppBarCpn(
@@ -277,7 +371,9 @@ class _StepTwoVideoState extends State<StepTwo> {
             ),
           ),
         ),
-        right: const TokenWidget(),
+        center: widget.isSwapVideo
+            ? const SizedBox()
+            : Text(widget.nameCate!, style: headline(color: grey1100)),
       ),
       floatingActionButton: const GiftWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -363,9 +459,15 @@ class _StepTwoVideoState extends State<StepTwo> {
                         onChanged: (bool? value) {
                           isHD = !isHD;
                           if (isHD) {
-                            tokensLost += TOKEN_EXPORT_HD;
+                            if (widget.isSwapVideo)
+                              tokensLostVideo += TOKEN_EXPORT_HD;
+                            else
+                              tokensLostImage += TOKEN_EXPORT_HD;
                           } else {
-                            tokensLost -= TOKEN_EXPORT_HD;
+                            if (widget.isSwapVideo)
+                              tokensLostVideo -= TOKEN_EXPORT_HD;
+                            else
+                              tokensLostImage -= TOKEN_EXPORT_HD;
                           }
                           setState(() {});
                         },
@@ -390,9 +492,15 @@ class _StepTwoVideoState extends State<StepTwo> {
                         onChanged: (bool? value) {
                           isRmWater = !isRmWater;
                           if (isRmWater) {
-                            tokensLost += TOKEN_REM_MARK;
+                            if (widget.isSwapVideo)
+                              tokensLostVideo += TOKEN_REM_MARK;
+                            else
+                              tokensLostImage += TOKEN_REM_MARK;
                           } else {
-                            tokensLost -= TOKEN_REM_MARK;
+                            if (widget.isSwapVideo)
+                              tokensLostVideo -= TOKEN_REM_MARK;
+                            else
+                              tokensLostImage -= TOKEN_REM_MARK;
                           }
                           setState(() {});
                         },
@@ -410,7 +518,9 @@ class _StepTwoVideoState extends State<StepTwo> {
                 const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 8),
             child: AppWidget.typeButtonStartAction(
                 context: context,
-                input: '${LocaleKeys.generate.tr()} -$tokensLost',
+                input: widget.isSwapVideo
+                    ? '${LocaleKeys.makeVideoNow.tr()} -$tokensLostVideo'
+                    : '${LocaleKeys.generate.tr()} -$tokensLostImage',
                 bgColor: check ? primary : grey300,
                 textColor: check ? grey1100 : grey600,
                 borderColor: check ? primary : grey300,
@@ -420,19 +530,35 @@ class _StepTwoVideoState extends State<StepTwo> {
                 onPressed: check
                     ? () async {
                         final userModel = context.read<UserBloc>().userModel!;
-                        if (userModel.token >= tokensLost) {
-                          //showInterApplovin(context, () {}, seconds: 5);
-                          EasyLoading.show();
-                          await handleSwapImage();
-                          EasyLoading.dismiss();
-                        } else {
-                          showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const NotEnoughToken();
-                            },
-                          );
-                        }
+                        // if (widget.isSwapVideo) {
+                        //   if (userModel.token >= tokensLostVideo) {
+                        //     showInterApplovin(context, () {}, seconds: 5);
+                        //     EasyLoading.show();
+                        //     await handleSwapVideo();
+                        //     EasyLoading.dismiss();
+                        //   } else {
+                        //     showDialog<void>(
+                        //       context: context,
+                        //       builder: (BuildContext context) {
+                        //         return const NotEnoughToken();
+                        //       },
+                        //     );
+                        //   }
+                        // } else {
+                          if (userModel.token >= tokensLostImage) {
+                            //showInterApplovin(context, () {}, seconds: 5);
+                            EasyLoading.show();
+                            await handleSwapImage();
+                            EasyLoading.dismiss();
+                          } else {
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const NotEnoughToken();
+                              },
+                            );
+                          }
+                        //}
                       }
                     : () {
                         BotToast.showText(
@@ -446,22 +572,86 @@ class _StepTwoVideoState extends State<StepTwo> {
           const SizedBox(height: 16),
         ],
       ),
-      body: ListView(
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.memory(
-                  widget.bytes,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-          ),
-        ],
+      body: Center(
+        child:
+        // widget.isSwapVideo
+        //     ? Padding(
+        //         padding: const EdgeInsets.symmetric(horizontal: 24),
+        //         child: ClipRRect(
+        //           borderRadius: BorderRadius.circular(16),
+        //           child: ConstrainedBox(
+        //             constraints: BoxConstraints(
+        //               minHeight: 200,
+        //               maxHeight: height / 2,
+        //             ),
+        //             child: AspectRatio(
+        //               aspectRatio: videoCtl!.value.aspectRatio,
+        //               child: ClipRRect(
+        //                   borderRadius: BorderRadius.circular(16),
+        //                   child: VideoPlayer(videoCtl!)),
+        //             ),
+        //           ),
+        //         ),
+        //       )
+            widget.images == null
+                ? BlocBuilder<FullImageCategoryBloc, FullImageCategoryState>(
+                    builder: (context, state) {
+                    switch (state.status) {
+                      case FullImageCategoryStatus.initial:
+                        return const Center(
+                            child: CupertinoActivityIndicator());
+                      case FullImageCategoryStatus.success:
+                        final int page = state.images
+                            .indexOf(context.read<SetImageSwapCubit>().state!);
+                        pageCtl = PageController(
+                            viewportFraction: 0.9, initialPage: page);
+                        pageCtl!.addListener(_onScroll);
+                        return PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          controller: pageCtl,
+                          onPageChanged: (value) {
+                            if (value == state.images.length) {
+                              return;
+                            }
+                            context
+                                .read<SetImageSwapCubit>()
+                                .setImageSwap(state.images[value]);
+                          },
+                          itemBuilder: (context, index) {
+                            return index == state.images.length
+                                ? const Center(
+                                    child: CupertinoActivityIndicator())
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: LoadingImage(
+                                        link: state.images[index].image),
+                                  );
+                          },
+                          itemCount: state.hasReachedMax
+                              ? state.images.length
+                              : state.images.length + 1,
+                        );
+                      case FullImageCategoryStatus.failure:
+                        return Center(
+                            child: Text(LocaleKeys.failedToFetch.tr(),
+                                style: subhead(color: grey800)));
+                    }
+                  })
+                : PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    controller: pageCtl,
+                    onPageChanged: (value) {
+                      context
+                          .read<SetImageSwapCubit>()
+                          .setImageSwap(widget.images![value]);
+                    },
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: LoadingImage(link: widget.images![index].image),
+                    ),
+                    itemCount: widget.images!.length,
+                  ),
       ),
     );
   }

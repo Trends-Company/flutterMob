@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../features/screen/bottom_bar.dart';
 import '../../features/screen/detail_history.dart';
+import '../../features/screen/full_image_category.dart';
+import '../../features/screen/full_image_new_today.dart';
+import '../../features/screen/full_image_trending.dart';
 import '../../features/screen/image_full_screen.dart';
 import '../../features/screen/menu.dart';
 import '../../features/screen/onboarding.dart';
@@ -14,6 +17,7 @@ import '../../features/screen/result_remove_bg.dart';
 import '../../features/screen/step_one.dart';
 import '../../features/screen/step_three.dart';
 import '../../features/screen/step_two.dart';
+import '../../features/screen/step_two_video.dart';
 import '../../features/screen/token_success.dart';
 import '../../features/widget/web_view_privacy.dart';
 import 'routes.dart';
@@ -109,6 +113,32 @@ mixin RouteGenerator {
       case Routes.menu:
         return MaterialPageRoute<dynamic>(
           builder: (context) => const MenuScreen(),
+        );
+      case Routes.full_image_category:
+        final args = settings.arguments as FullImageCategory;
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => FullImageCategory(
+            categoryModel: args.categoryModel,
+          ),
+        );
+      case Routes.full_image_trending:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const FullImageTrending(),
+        );
+      case Routes.full_image_new_today:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const FullImageNewToday(),
+        );
+      case Routes.step_two_video:
+        final args = settings.arguments as StepTwoVideo;
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => StepTwoVideo(
+            pathSource: args.pathSource,
+            isSwapVideo: args.isSwapVideo,
+            images: args.images,
+            categoryId: args.categoryId,
+            nameCate: args.nameCate,
+          ),
         );
       default:
         return _errorRoute();

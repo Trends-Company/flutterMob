@@ -170,5 +170,8 @@
     "addNewFace": "Agregar nuevo rostro",
     "pleaseTryOtherVideo": "Por favor prueba con otro video.",
     "tryToBuy": "¡Intenta comprar la ficha y continúa intercambiando el rostro de la imagen ahora!",
-    "next": "Próxima"
+    "next": "Próxima",
+    "hdExport": "Exportación HD",
+    "removeWater": "Eliminar marca de agua",
+    "seeAll": "Ver todo"
 }

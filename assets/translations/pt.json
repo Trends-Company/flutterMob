@@ -170,5 +170,8 @@
     "addNewFace": "Adicionar novo rosto",
     "pleaseTryOtherVideo": "Por favor, tente outro vídeo.",
     "tryToBuy": "Tente comprar o token e continue a trocar o rosto da imagem agora!",
-    "next": "Próxima"
+    "next": "Próxima",
+    "hdExport": "Exportar HD",
+    "removeWater": "Remover marca d'água",
+    "verTodos": "Ver Todos"
 }

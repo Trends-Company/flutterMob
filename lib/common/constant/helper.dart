@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +47,7 @@ import 'images.dart';
 import 'styles.dart';
 
 /* MUST CONFIG */
-const apiEndpoint = 'https://5487-41-230-76-215.ngrok-free.app';
+const apiEndpoint = 'http://7.tcp.eu.ngrok.io:13588';
 const apiUploadImageEndpoint = 'https://nodejs-ai-graphy.vercel.app';
 const tokenIdentifier1 = 'dev_ditustudio_faceswap1';
 const tokenIdentifier2 = 'dev_ditustudio_faceswap2';
@@ -97,6 +98,8 @@ const IMAGE_CATEGORY_LIMIT = 10;
 const IMAGE_SHOW_LIMIT = 10;
 const DEFAULT_SLOT = 5;
 const DEFAULT_SLOT_HISTORY = 30;
+const TOKEN_EXPORT_HD = 3;
+const TOKEN_REM_MARK = 2;
 
 // image guide remove bg
 // MUST CONFIG
@@ -239,6 +242,14 @@ Future<Uint8List> getImage(String url) async {
   final responseData = await http.get(Uri.parse(url));
   final Uint8List res = responseData.bodyBytes;
   return res;
+}
+
+Future<Uint8List> comporessImage(Uint8List list) async {
+  final result = await FlutterImageCompress.compressWithList(
+    list,
+    quality: 20, // You can change the quality of the user's face here, the lower the better so the image will appear on the app faster. Of course, don't set it too low because it will lose color.
+  );
+  return result;
 }
 
 Future<void> uploadFace(BuildContext context, Uint8List? res) async {
