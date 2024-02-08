@@ -10,8 +10,8 @@ class ListenLanguageBloc
     on<InitialLanguage>(_onInitialLanguage);
     on<ChangeLanguage>(_onChangeLanguage);
   }
-  late String locale;
-  late String language;
+  late String locale = 'en';
+  late String language = 'English';
 
   String getLanguage(String locale) {
     switch (locale) {

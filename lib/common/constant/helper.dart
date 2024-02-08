@@ -47,7 +47,7 @@ import 'images.dart';
 import 'styles.dart';
 
 /* MUST CONFIG */
-const apiEndpoint = 'http://7.tcp.eu.ngrok.io:13588';
+const apiEndpoint = 'https://nodejs-ai-graphy.vercel.app';
 const apiUploadImageEndpoint = 'https://nodejs-ai-graphy.vercel.app';
 const tokenIdentifier1 = 'dev_ditustudio_faceswap1';
 const tokenIdentifier2 = 'dev_ditustudio_faceswap2';
@@ -606,6 +606,6 @@ Future<void> getRecentFace(bool mounted, BuildContext context) async {
 }
 
 Future<void> createNoti() async {
-  await createNotification();
-  await requestPermissions();
+  //await createNotification();
+  //await requestPermissions();
 }
