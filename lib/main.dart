@@ -30,7 +30,7 @@ Future<void> main() async {
           appId: '1:446060903157:android:dcde762055cddb854a63bc',
           apiKey: 'AIzaSyA-mxv6gE5JyAmXYyDPH4APcjR5rIo7JLU',
           projectId: 'aigraphy',
-          authDomain: 'nodejs-ai-graphy.vercel.app',
+          authDomain: 'aigraphy.vercel.app',
           messagingSenderId: '446060903157',
         ));
   }

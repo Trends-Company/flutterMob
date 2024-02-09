@@ -68,44 +68,7 @@ class ActionSwapCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
-      child: Row(
-        children: [
-          Expanded(
-            child: AppWidget.typeButtonStartAction2(
-                context: context,
-                input: 'Remove BG',
-                borderRadius: 12,
-                vertical: 20,
-                icon: ic_removebg,
-                onPressed: () {
-                  setPhoto(context, true);
-                },
-                bgColor: green,
-                sizeAsset: 24,
-                borderColor: green,
-                textColor: grey1100),
-          ),
-          const SizedBox(width: 24),
-          Expanded(
-            child: AppWidget.typeButtonStartAction2(
-                context: context,
-                input: 'Edit Image',
-                borderRadius: 12,
-                vertical: 20,
-                icon: paint,
-                onPressed: () {
-                  setPhoto(context, false);
-                },
-                bgColor: primary,
-                sizeAsset: 24,
-                colorAsset: grey1100,
-                borderColor: primary,
-                textColor: grey1100),
-          )
-        ],
-      ),
-    );
+    return SizedBox.shrink();
+
   }
 }

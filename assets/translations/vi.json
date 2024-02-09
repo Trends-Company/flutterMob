@@ -113,7 +113,7 @@
     "photos": "Ảnh",
     "insertYourMessage": "Nhập tin nhắn của bạn",
     "sliderWhiteBlackColor": "Thanh trượt màu trắng đen",
-    "pleaseChoosePhoto": "Vui lòng chọn ảnh có kích thước nhỏ hơn 2 MB",
+    "pleaseChoosePhoto": "Vui lòng chọn ảnh có kích thước nhỏ hơn 4 MB",
     "weDontSupportGif": "Chúng tôi không hỗ trợ tệp gif. Vui lòng chọn tệp khác",
     "weDontSupportWebp": "Chúng tôi không hỗ trợ tệp webp. Vui lòng chọn tệp khác",
     "failedToFetchRequests": "Không thể lấy yêu cầu",

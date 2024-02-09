@@ -79,11 +79,11 @@ class _ListPhotoState extends State<ListPhoto> {
 
   Future<void> takeAPhoto() async {
     imageFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 80);
+        .pickImage(source: ImageSource.camera, imageQuality: 100);
     if (imageFile != null) {
       final File file = File(imageFile!.path);
       imageSelected = file.readAsBytesSync();
-      if (imageSelected.lengthInBytes / (1024 * 1024) >= 2) {
+      if (imageSelected.lengthInBytes >= 6 * 1024 * 1024) {
         BotToast.showText(
             text: LocaleKeys.pleaseChoosePhoto.tr(),
             textStyle: body(color: grey1100));
@@ -125,7 +125,7 @@ class _ListPhotoState extends State<ListPhoto> {
       function: () async {
         final File? file = await photo.file;
         imageSelected = file!.readAsBytesSync();
-        if (imageSelected.lengthInBytes / (1024 * 1024) >= 2) {
+        if (imageSelected.lengthInBytes >= 6 * 1024 * 1024) {
           BotToast.showText(
               text: LocaleKeys.pleaseChoosePhoto.tr(),
               textStyle: body(color: grey1100));

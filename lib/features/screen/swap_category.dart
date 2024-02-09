@@ -69,27 +69,41 @@ class _SwapCategoryState extends State<SwapCategory>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                  child: Text(categoryModel.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: title4(color: grey700))),
+                child: ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [Color(0xFF02FEE2), Color(0xFF6661FB), Color(0xFFB956FA)],
+                    ).createShader(bounds);
+                  },
+                  child: Text(
+                    categoryModel.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: title4(color: Colors.white), // Base color for the text under the shader
+                  ),
+                ),
+              ),
               AnimationClick(
                 function: () {
-                  context
-                      .read<FullImageCategoryBloc>()
-                      .add(ResetFullImageCategory());
+                  context.read<FullImageCategoryBloc>().add(ResetFullImageCategory());
                   context.read<FullImageCategoryBloc>().add(
                       FullImageCategoryFetched(categoryId: categoryModel.id!));
-                  Navigator.of(context).pushNamed(Routes.full_image_category,
-                      arguments:
-                          FullImageCategory(categoryModel: categoryModel));
+                  Navigator.of(context).pushNamed(
+                    Routes.full_image_category,
+                    arguments: FullImageCategory(categoryModel: categoryModel),
+                  );
                 },
-                child: Text(LocaleKeys.seeAll.tr(),
-                    style: headline(color: grey700)),
+                child: Text(
+                  LocaleKeys.seeAll.tr(),
+                  style: headline(color: grey700),
+                ),
               )
             ],
           ),
         ),
+
         const SizedBox(height: 8),
         Align(
           alignment: Alignment.centerLeft,
@@ -165,22 +179,37 @@ class _SwapCategoryState extends State<SwapCategory>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                  child: Text(isNewToday ? 'New Today' : 'Trending',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: title4(color: grey700))),
+                child: ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [Color(0xFF02FEE2), Color(0xFF6661FB), Color(0xFFB956FA)],
+                    ).createShader(bounds);
+                  },
+                  child: Text(
+                    isNewToday ? 'NEW TODAY' : 'TRENDING',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: title4(color: Colors.white), // Use a base color for the text
+                  ),
+                ),
+              ),
               AnimationClick(
                 function: () {
                   Navigator.of(context).pushNamed(isNewToday
                       ? Routes.full_image_new_today
                       : Routes.full_image_trending);
                 },
-                child: Text(LocaleKeys.seeAll.tr(),
-                    style: headline(color: grey700)),
+                child: Text(
+                  LocaleKeys.seeAll.tr(),
+                  style: headline(color: grey700),
+                ),
               )
             ],
           ),
         ),
+
         const SizedBox(height: 8),
         Align(
           alignment: Alignment.centerLeft,

@@ -47,8 +47,8 @@ import 'images.dart';
 import 'styles.dart';
 
 /* MUST CONFIG */
-const apiEndpoint = 'https://nodejs-ai-graphy.vercel.app';
-const apiUploadImageEndpoint = 'https://nodejs-ai-graphy.vercel.app';
+const apiEndpoint = 'http://167.172.182.125:8000';
+const apiUploadImageEndpoint = 'https://aigraphy.vercel.app';
 const tokenIdentifier1 = 'dev_ditustudio_faceswap1';
 const tokenIdentifier2 = 'dev_ditustudio_faceswap2';
 const tokenIdentifier4 = 'dev_ditustudio_faceswap4';

@@ -439,7 +439,7 @@ class _StepTwoVideoState extends State<StepTwoVideo> {
               ),
             ],
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.only(left: 12, right: 24, top: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -512,7 +512,7 @@ class _StepTwoVideoState extends State<StepTwoVideo> {
                 )
               ],
             ),
-          ),
+          ),*/
           Padding(
             padding:
                 const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 8),

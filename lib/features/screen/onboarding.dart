@@ -47,35 +47,22 @@ class _OnboardingState extends State<Onboarding> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        index == 2
-            ? Expanded(
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Image.asset(
-                      landings[index],
-                      width: width,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-              )
-            : Expanded(
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    Positioned(
-                      left: 32,
-                      right: 32,
-                      bottom: 24,
-                      child: Image.asset(
-                        landings[index],
-                        height: height / 3,
-                      ),
-                    ),
-                  ],
+        Expanded(
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              Positioned(
+                left: 1,
+                right: 1,
+                bottom: -250,
+                child: Image.asset(
+                  landings[index],
+                  height: height / 1, // Make all images occupy one-third of screen height
                 ),
               ),
+            ],
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //primary
-const Color primary = Color(0xFF106AF3);
+const Color primary = Color(0xFF8F14CB);
 const Color blueLight = Color(0xFF7AA7EC);
 const Color blueLight2 = Color(0xFF429DF0);
 const Color blueLight3 = Color(0xFF5784E8);
@@ -40,7 +40,7 @@ const Color grey500 = Color(0xFF717B84);
 const Color grey400 = Color(0xFF5A6570);
 const Color grey300 = Color(0xFF414F5B);
 const Color grey200 = Color(0xFF212124);
-const Color grey100 = Color(0xFF151517);
+const Color grey100 = Color(0xFF000000);
 
 extension CustomColorTheme on ThemeData {
   //text
@@ -111,8 +111,8 @@ extension CustomColorTheme on ThemeData {
         end: Alignment.bottomCenter,
         begin: Alignment.topCenter,
         colors: [
-          const Color(0xFF106AF3).withOpacity(0.5),
-          const Color(0xFF106AF3).withOpacity(0),
+          const Color(0xFF8F14CB).withOpacity(0.5),
+          const Color(0xFF002762).withOpacity(0),
         ],
       );
 }

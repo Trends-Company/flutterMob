@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
       ..textColor = grey1100
       ..indicatorWidget = const LottieWidget(
         lottie: loading,
-        height: 100,
+        height: 250,
       );
     // AdLovinUtils().initOpenAds();
     showPrice();

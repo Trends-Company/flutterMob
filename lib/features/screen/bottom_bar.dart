@@ -98,7 +98,7 @@ class _BottomBarState extends State<BottomBar> {
     listWidget = [
       const SwapCategory(),
       const StepOne(),
-      SwapVideo(),
+      //SwapVideo(),
       const Profile(),
     ];
     loadData();
@@ -126,8 +126,8 @@ class _BottomBarState extends State<BottomBar> {
               LocaleKeys.category.tr()),
           AppWidget.createItemNav(
               context, paint_brush, paint_brush_active, LocaleKeys.home.tr()),
-          AppWidget.createItemNav(
-              context, video_camera, video_camera_active, LocaleKeys.home.tr()),
+          // AppWidget.createItemNav(
+          //     context, paint_brush, paint_brush_active, LocaleKeys.home.tr()),
           BottomNavigationBarItem(
               icon: ClipRRect(
                 borderRadius: BorderRadius.circular(32),
@@ -136,16 +136,16 @@ class _BottomBarState extends State<BottomBar> {
                   if (state is UserLoaded) {
                     return CachedNetworkImage(
                       imageUrl: state.user.avatar,
-                      width: 28,
-                      height: 28,
+                      width: 32,
+                      height: 32,
                       fadeOutDuration: const Duration(milliseconds: 200),
                       fadeInDuration: const Duration(milliseconds: 200),
                     );
                   }
                   return CachedNetworkImage(
                     imageUrl: defaultAvatar,
-                    width: 28,
-                    height: 28,
+                    width: 32,
+                    height: 32,
                     fadeOutDuration: const Duration(milliseconds: 200),
                     fadeInDuration: const Duration(milliseconds: 200),
                   );

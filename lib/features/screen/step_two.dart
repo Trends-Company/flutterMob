@@ -139,11 +139,11 @@ class _StepTwoVideoState extends State<StepTwo> {
             });
           },
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(32)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
             margin: const EdgeInsets.only(bottom: 8),
             child: LoadingFace(
               link: recentFaceModel.face,
-              radius: 32,
+              radius: 3,
             ),
           ),
         ),
@@ -159,7 +159,7 @@ class _StepTwoVideoState extends State<StepTwo> {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
+                        borderRadius: BorderRadius.circular(3),
                         color: grey300),
                     child: Image.asset(
                       icClose,
@@ -214,7 +214,7 @@ class _StepTwoVideoState extends State<StepTwo> {
                         decoration: BoxDecoration(
                             color: grey200,
                             border: Border.all(color: grey600),
-                            borderRadius: BorderRadius.circular(32)),
+                            borderRadius: BorderRadius.circular(3)),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 16),
                         child: Image.asset(
@@ -232,7 +232,7 @@ class _StepTwoVideoState extends State<StepTwo> {
                           decoration: BoxDecoration(
                               color: grey200,
                               border: Border.all(color: grey600),
-                              borderRadius: BorderRadius.circular(32)),
+                              borderRadius: BorderRadius.circular(3)),
                         )
                       : itemRecent(index, recentFaces[index]);
             },
@@ -291,7 +291,17 @@ class _StepTwoVideoState extends State<StepTwo> {
                 function: setPhoto,
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(48), color: grey300),
+                    borderRadius: BorderRadius.circular(0), // For square corners
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF02FEE2), // Corrected color value
+                         Color(0xFF6661FB), // Corrected color value, assuming missing digit corrected
+                        Color(0xFFB956FA), // Corrected color value
+                      ],
+                    ),
+                  ),
                   padding: const EdgeInsets.all(19),
                   margin: const EdgeInsets.only(left: 24, right: 16),
                   child: const Icon(
@@ -304,20 +314,17 @@ class _StepTwoVideoState extends State<StepTwo> {
               if (pathPublic != null)
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(36),
                       border: Border.all(color: grey1100, width: 2)),
                   child: LoadingFace(
                     link: pathPublic!,
-                    radius: 32,
+                    radius: 3,
                   ),
                 ),
               if (pathLocal != null)
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(36),
                       border: Border.all(color: grey1100, width: 2)),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(32),
                     child: Image.memory(
                       yourFace!,
                       width: 64,
@@ -332,7 +339,6 @@ class _StepTwoVideoState extends State<StepTwo> {
                       height: 48,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
                           color: grey300))
                   : const SizedBox(),
               Expanded(
@@ -343,7 +349,7 @@ class _StepTwoVideoState extends State<StepTwo> {
               ),
             ],
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.only(left: 12, right: 24, top: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -404,7 +410,7 @@ class _StepTwoVideoState extends State<StepTwo> {
                 )
               ],
             ),
-          ),
+          ),*/
           Padding(
             padding:
                 const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 8),
@@ -452,7 +458,6 @@ class _StepTwoVideoState extends State<StepTwo> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
                 child: Image.memory(
                   widget.bytes,
                   width: double.infinity,

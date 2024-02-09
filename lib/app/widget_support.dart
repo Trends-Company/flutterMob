@@ -564,14 +564,14 @@ mixin AppWidget {
     return BottomNavigationBarItem(
         activeIcon: Image.asset(
           iconActive,
-          width: 24,
-          height: 24,
+          width: 32,
+          height: 32,
           fit: BoxFit.cover,
         ),
         icon: Image.asset(
           iconInactive,
-          width: 24,
-          height: 24,
+          width: 32,
+          height: 32,
           fit: BoxFit.cover,
         ),
         label: label);
